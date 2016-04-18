@@ -1,9 +1,10 @@
 package br.com.jrnin.celulas.usuario;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Usuario implements Serializable {
@@ -16,9 +17,24 @@ public class Usuario implements Serializable {
 	private String login;
 	private String senha;
 	private Date nascimento;
-	private String celular;
-	private String idioma;
+	private String celular;	
 	private boolean ativo;
+	
+	@ElementCollection(targetClass = String.class) 
+	@JoinTable(
+			name="usuario_permissao", 
+			uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario","permissao"})}, 
+			joinColumns = @JoinColumn(name = "usuario")) 
+	@Column(name = "permissao", length=50) 
+	private Set<String>	permissao	= new HashSet<String>(); 
+
+	public Set<String> getPermissao() {
+		return permissao;
+	}
+
+	public void setPermissao(Set<String> permissao) {
+		this.permissao = permissao;
+	}
 
 	public Integer getCodigo() {
 		return codigo;
@@ -74,15 +90,7 @@ public class Usuario implements Serializable {
 
 	public void setCelular(String celular) {
 		this.celular = celular;
-	}
-
-	public String getIdioma() {
-		return idioma;
-	}
-
-	public void setIdioma(String idioma) {
-		this.idioma = idioma;
-	}
+	}	
 
 	public boolean isAtivo() {
 		return ativo;
@@ -99,8 +107,7 @@ public class Usuario implements Serializable {
 		result = prime * result + (ativo ? 1231 : 1237);
 		result = prime * result + ((celular == null) ? 0 : celular.hashCode());
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((idioma == null) ? 0 : idioma.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());		
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result
 				+ ((nascimento == null) ? 0 : nascimento.hashCode());
@@ -134,12 +141,7 @@ public class Usuario implements Serializable {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
-			return false;
-		if (idioma == null) {
-			if (other.idioma != null)
-				return false;
-		} else if (!idioma.equals(other.idioma))
-			return false;
+			return false;		
 		if (login == null) {
 			if (other.login != null)
 				return false;

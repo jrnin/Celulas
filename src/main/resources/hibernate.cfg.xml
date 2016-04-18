@@ -5,12 +5,10 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://localhost:3306/celulaspib</property>
-		<property name="connection.username">root</property>
-		<property name="connection.password">root</property>
+		<property name="connection.datasource">java:/comp/env/jdbc/CelulasDB</property>		
 		<property name="current_session_context_class">thread</property>
 		<property name="hibernate.hbm2ddl.auto">update</property> 
+		
 
 		<mapping class="br.com.jrnin.celulas.usuario.Usuario"/> 
 
