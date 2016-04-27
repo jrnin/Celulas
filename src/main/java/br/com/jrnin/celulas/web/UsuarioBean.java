@@ -6,6 +6,8 @@ import br.com.jrnin.celulas.usuario.Usuario;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
 import br.com.jrnin.celulas.usuario.UsuarioRN;
+import br.com.jrnin.celulas.cadastrocelulas.Celulas;
+import br.com.jrnin.celulas.cadastrocelulas.CelulasRN;
 
 
 @ManagedBean(name = "usuarioBean")
@@ -15,6 +17,7 @@ public class UsuarioBean {
 	private String confirmarSenha;
 	private List<Usuario> lista;
 	private String destinoSalvar;
+	private Celulas celulas = new Celulas();
 
 	public String novo() { 
 		this.destinoSalvar = "usuariosucesso";
@@ -38,6 +41,13 @@ public class UsuarioBean {
 
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.salvar(this.usuario); 
+		
+		if (this.celulas.getObservacao() != null) { 
+			this.celulas.setUsuario(this.usuario); 
+			//this.celulas.setFavorita(true); 
+			CelulasRN celulasRN = new CelulasRN();
+			celulasRN.salvar(this.celulas);
+		}
 
 		return this.destinoSalvar;
 	}
@@ -100,6 +110,13 @@ public class UsuarioBean {
 
 	public void setDestinoSalvar(String destinoSalvar) {
 		this.destinoSalvar = destinoSalvar;
+	}
+	public Celulas getCelulas() {
+		return celulas;
+	}
+
+	public void setCelulas(Celulas celulas) {
+		this.celulas = celulas;
 	}
 
 }

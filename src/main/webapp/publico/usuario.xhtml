@@ -59,6 +59,17 @@
 			<h:inputSecret id="confirmarsenha" label="Confirmar Senha" value="#{usuarioBean.confirmarSenha}" 
 				size="10" maxlength="10" required="true" redisplay="true"/>
 		</h:panelGrid>
+		
+		<h:panelGroup rendered="#{empty usuarioBean.usuario.codigo}"> 
+			<fieldset><legend>Celula Inicial</legend>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Observação: " for="observacao" />
+				<h:inputText id="observacao" label="Observação" value="#{usuarioBean.celulas.observacao}"
+					required="true" maxlength="45" />			
+				
+			</h:panelGrid>
+			</fieldset>
+		</h:panelGroup>
 			
 		<h:commandButton action="#{usuarioBean.salvar}" value="Salvar"/>
 	</h:form>
